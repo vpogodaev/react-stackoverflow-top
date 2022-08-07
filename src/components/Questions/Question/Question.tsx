@@ -9,6 +9,8 @@ type TQuestionProps = {
   onClick: MouseEventHandler<HTMLDivElement>;
   onDoubleClick: MouseEventHandler<HTMLDivElement>;
   selected: 'this' | 'other' | 'none';
+  onUpScoreClicked: MouseEventHandler<SVGSVGElement>;
+  onDownScoreClicked: MouseEventHandler<SVGSVGElement>;
 };
 
 type TArrowProps = {
@@ -58,7 +60,9 @@ const Details = forwardRef<HTMLDivElement, TDetailsProps>(({ details }, ref) => 
 
 });
 
-export const Question: FC<TQuestionProps> = ({ question, opened, onClick, onDoubleClick, selected }) => {
+export const Question: FC<TQuestionProps> = ({
+  question, opened, onClick, onDoubleClick, selected, onUpScoreClicked, onDownScoreClicked,
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
   const timer = useRef<NodeJS.Timeout | null>(null);
@@ -84,18 +88,17 @@ export const Question: FC<TQuestionProps> = ({ question, opened, onClick, onDoub
 
   const handleUpClick = (e: MouseEvent<SVGSVGElement>) => {
     e.stopPropagation();
-    console.log('handleUpClick', question.question_id);
+    onUpScoreClicked(e);
   };
 
   const handleDownClick = (e: MouseEvent<SVGSVGElement>) => {
     e.stopPropagation();
-    console.log('handleDownClick', question.question_id);
+    onDownScoreClicked(e);
   };
 
   const handleQuestionClick = (e: MouseEvent<HTMLDivElement>) => {
     if (e.detail === 1) {
       timer.current = setTimeout(() => {
-        console.log('handleQuestionClick', e.detail);
         onClick(e);
       }, 200);
     }

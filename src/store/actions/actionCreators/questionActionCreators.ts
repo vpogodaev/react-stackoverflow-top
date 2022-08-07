@@ -15,16 +15,32 @@ export const getQuestionsRequest = (): actions.GetQuestionsRequestAction => (
   }
 );
 
-export const getQuestionsSuccess = (questions: IStackQuestion[]) => (
+export const getQuestionsSuccess = (questions: IStackQuestion[]): actions.GetQuestionsSuccessAction => (
   {
     type: actions.GET_QUESTIONS_SUCCESS,
     questions,
   }
 );
 
-export const getQuestionsFailure = (error: string) => (
+export const getQuestionsFailure = (error: string): actions.GetQuestionsFailureAction => (
   {
     type: actions.GET_QUESTIONS_FAILURE,
     error,
+  }
+);
+
+export const swapQuestions = (question1Id: number, question2Id: number): actions.SwapQuestions => (
+  {
+    type: actions.SWAP_QUESTIONS,
+    question1Id,
+    question2Id,
+  }
+);
+
+export const changeQuestionScore = (questionId: number, score: number): actions.ChangeQuestionScore => (
+  {
+    type: actions.CHANGE_QUESTION_SCORE,
+    questionId,
+    score,
   }
 );

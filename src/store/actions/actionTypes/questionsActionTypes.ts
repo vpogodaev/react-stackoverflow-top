@@ -24,8 +24,24 @@ export type GetQuestionsFailureAction = {
   error: string;
 }
 
+export const SWAP_QUESTIONS = 'questionsActionTypes/SWAP_QUESTIONS';
+export type SwapQuestions = {
+  type: typeof SWAP_QUESTIONS;
+  question1Id: number;
+  question2Id: number;
+}
+
+export const CHANGE_QUESTION_SCORE = 'questionsActionTypes/CHANGE_QUESTION_SCORE';
+export type ChangeQuestionScore = {
+  type: typeof CHANGE_QUESTION_SCORE;
+  questionId: number;
+  score: number;
+}
+
 export type QuestionsAction =
   GetQuestionsAction
   | GetQuestionsRequestAction
   | GetQuestionsSuccessAction
-  | GetQuestionsFailureAction;
+  | GetQuestionsFailureAction
+  | SwapQuestions
+  | ChangeQuestionScore;

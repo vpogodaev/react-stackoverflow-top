@@ -4,7 +4,11 @@ import { Question } from './Question/Question';
 import style from './Questions.module.scss';
 import { selectQuestions } from '../../store/selectors/questionsSelectors';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getQuestions } from '../../store/actions/actionCreators/questionActionCreators';
+import {
+  changeQuestionScore,
+  getQuestions,
+  swapQuestions,
+} from '../../store/actions/actionCreators/questionActionCreators';
 // import { useDrop } from 'react-dnd';
 // import { draggableTypes } from '@shared/draggableTypes';
 
@@ -44,15 +48,19 @@ export const Questions: FC<TQuestionsProps> = ({}) => {
   };
 
   const handleQuestionDoubleClick = (id: number) => {
-    // if (!selectedIndex) {
-    //   setSelectedIndex(index);
-    // } else if (selectedIndex !== index) {
-    //   //[questions[index], questions[selectedIndex]] = [questions[index], questions[selectedIndex]];
-    // } else {
-    //   setSelectedIndex(null);
-    // }
+    if (!selectedId) {
+      setSelectedId(id);
+    } else if (selectedId !== id) {
+      dispatch(swapQuestions(id, selectedId));
+      setSelectedId(null);
+    } else {
+      setSelectedId(null);
+    }
   };
 
+  const handleScoreChange = (id: number, newScore: number) => {
+    dispatch(changeQuestionScore(id, newScore));
+  };
 
   const questionsToRender = questions.map(q => {
     const selected = (
@@ -63,13 +71,16 @@ export const Questions: FC<TQuestionsProps> = ({}) => {
         return selectedId === q.question_id ? 'this' : 'other';
       }
     )();
+
     return (
       <Question key={q.question_id}
                 question={q}
                 opened={openedId === q.question_id}
                 selected={selected}
                 onClick={() => handleQuestionClick(q.question_id)}
-                onDoubleClick={() => handleQuestionDoubleClick(q.question_id)} />
+                onDoubleClick={() => handleQuestionDoubleClick(q.question_id)}
+                onUpScoreClicked={() => handleScoreChange(q.question_id, q.score + 1)}
+                onDownScoreClicked={() => handleScoreChange(q.question_id, q.score - 1)} />
     );
   });
 
