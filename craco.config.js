@@ -8,6 +8,15 @@ module.exports = {
     alias: {
       '@pages': resolvePath('./src/pages'),
       '@components': resolvePath('./src/components'),
+      '@entities': resolvePath('./src/entities'),
+      '@shared': resolvePath('./src/shared'),
+    },
+  },
+  style: {
+    sass: {
+      loaderOptions: {
+        additionalData: '@import "src/styles/variables.scss";',
+      },
     },
   },
 };

@@ -2,7 +2,9 @@
 @import "fonts";
 @import "variables";
 
-body {
+html {
   font-family: 'Caveat', cursive;
   font-weight: $font-w400;
+  font-size: 24px;
+  color: $c-grey;
 }

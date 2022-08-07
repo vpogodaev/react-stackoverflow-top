@@ -29,7 +29,6 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-return-await': 'off',
     'no-empty-pattern': 'warn',
-    'no-shadow': 'off',
     'no-underscore-dangle': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     'no-return-assign': 'off',

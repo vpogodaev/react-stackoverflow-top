@@ -1,0 +1,93 @@
+.wrapper {
+  border: 1px solid $c-grey;
+  //padding: 10px;
+  border-radius: 8px;
+
+  &.correct {
+    background-color: $c-green;
+  }
+}
+
+.question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+
+  &.dragging {
+    opacity: 0.5;
+  }
+
+  .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 15px;
+  }
+
+  .right {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .arrows {
+    display: flex;
+    flex-direction: column;
+
+    .arrow {
+      height: 24px;
+      cursor: pointer;
+      transition: $trans;
+
+      &.up {
+        transform: rotate(-90deg);
+      }
+
+      &.down {
+        transform: rotate(90deg);
+      }
+
+      &:hover {
+        &.up {
+          fill: $c-green;
+        }
+
+        &.down {
+          fill: $c-red;
+        }
+      }
+    }
+  }
+
+  .score {
+    border-radius: 16px;
+    background-color: grey;
+    padding: 2px 8px 2px 5px;
+    color: white;
+  }
+}
+
+.collapsable {
+  transition: height $trans ease-in-out;
+  overflow: hidden;
+}
+
+.details {
+  border-top: 1px solid $c-grey;
+  margin: 10px;
+  padding-top: 10px;
+
+  .info {
+    display: grid;
+    grid-template-columns: min-content auto;
+    gap: 10px;
+
+    span {
+      white-space: nowrap;
+    }
+  }
+}
+

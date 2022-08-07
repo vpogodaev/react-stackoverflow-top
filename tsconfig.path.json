@@ -13,6 +13,18 @@
       ],
       "@components/*": [
         "components/*"
+      ],
+      "@entities": [
+        "entities"
+      ],
+      "@entities/*": [
+        "entities/*"
+      ],
+      "@shared": [
+        "shared"
+      ],
+      "@shared/*": [
+        "shared/*"
       ]
     }
   }
