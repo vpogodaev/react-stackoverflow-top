@@ -59,7 +59,7 @@ export const Questions: FC = () => {
     dispatch(changeQuestionScore(id, newScore));
   };
 
-  const questionsToRender = questions.map((q, i) => {
+  const questionsToRender = questions.map((q) => {
     const selected = (
       () => {
         if (!selectedId) {

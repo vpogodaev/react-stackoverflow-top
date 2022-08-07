@@ -19,10 +19,10 @@ export const DroppableQuestion: FC<TDroppableQuestionProps> = ({ ...rest }) => {
   const [, drop] = useDrop(() => (
     {
       accept: draggableTypes.QUESTION,
-      drop: (q: any) => handleDrop(q?.question_id),
       collect: (monitor) => (
         { isOver: !!monitor.isOver() }
       ),
+      hover: (q: any) => handleDrop(q?.question_id),
     }
   ));
 

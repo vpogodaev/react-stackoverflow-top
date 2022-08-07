@@ -37,5 +37,7 @@ module.exports = {
     '@typescript-eslint/ban-types': 'warn',
     'arrow-body-style': 'warn',
     'default-param-last': 'off',
+    'jsx-a11y/click-events-have-key-events': 'warn',
+    'jsx-a11y/no-static-element-interactions': 'warn',
   },
 };

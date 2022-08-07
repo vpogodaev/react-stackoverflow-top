@@ -11,6 +11,7 @@ export const Arrow: FC<TArrowProps> = ({ direction, onClick }) => {
   return (
     <ArrowRight className={`${style.arrow} ${style[direction]}`}
                 role="button"
-                onClick={onClick} />
+                onClick={onClick}
+                onDoubleClick={(e) => e.stopPropagation()} />
   );
 };

@@ -21,6 +21,7 @@ export const Question: FC<TQuestionProps> = ({
 }) => {
   const detailsRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
+  // eslint-disable-next-line no-undef
   const timer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -97,6 +98,7 @@ export const Question: FC<TQuestionProps> = ({
   return (
     <div className={`${style.wrapper} ${style[selected]}${question.is_answered ? ` ${style.correct}` : ''}${isDragging ? ` ${style.dragging}` : ''}`}
          ref={drag}>
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
       <div className={style.question}
            onClick={handleQuestionClick}
            onDoubleClick={handleQuestionDoubleClick}>

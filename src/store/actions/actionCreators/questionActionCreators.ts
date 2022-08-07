@@ -1,6 +1,5 @@
 import { IStackQuestion } from '@entities/IQuestion';
 import * as actions from '../actionTypes/questionsActionTypes';
-import { ChangeQuestionPosition } from '../actionTypes/questionsActionTypes';
 
 export const getQuestions = (dateFrom: number, title = 'react-redux'): actions.GetQuestionsAction => (
   {
