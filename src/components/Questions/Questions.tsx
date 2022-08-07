@@ -1,85 +1,77 @@
-import React, { FC, useRef, useState } from 'react';
-import { IQuestion } from '@entities/question/IQuestion';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useOnOutsideClick } from '@shared/hooks/useOnOutsideClick';
 import { Question } from './Question/Question';
 import style from './Questions.module.scss';
+import { selectQuestions } from '../../store/selectors/questionsSelectors';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { getQuestions } from '../../store/actions/actionCreators/questionActionCreators';
+// import { useDrop } from 'react-dnd';
+// import { draggableTypes } from '@shared/draggableTypes';
 
 type TQuestionsProps = {};
 
 export const Questions: FC<TQuestionsProps> = ({}) => {
-  const questions: IQuestion[] = [
-    {
-      questionId: 1,
-      title: 'React-redux is awesome, isn\'t it?',
-      creationDate: new Date(),
-      isAnswered: true,
-      score: 100500,
-      viewCount: 1000,
-      ownerName: 'Some name',
-      ownerReputation: 1432,
-    },
-    {
-      questionId: 2,
-      title: 'React-redux connect() fails to pass the props',
-      creationDate: new Date(),
-      isAnswered: false,
-      score: 5,
-      viewCount: 1000,
-      ownerName: 'Some name',
-      ownerReputation: 1432,
-    },
-    {
-      questionId: 3,
-      title: 'How does foreach works in react-redux',
-      creationDate: new Date(),
-      isAnswered: false,
-      score: 3,
-      viewCount: 1000,
-      ownerName: 'Some name',
-      ownerReputation: 1432,
-    },
-    {
-      questionId: 4,
-      title: 'React-Redux Why does specific component update, when its sibling\'s child component something',
-      creationDate: new Date(),
-      isAnswered: true,
-      score: 3,
-      viewCount: 1000,
-      ownerName: 'Some name',
-      ownerReputation: 1432,
-    },
-    {
-      questionId: 5,
-      title: 'How to update/merge array values in React-Redux correctly',
-      creationDate: new Date(),
-      isAnswered: false,
-      score: 2,
-      viewCount: 1000,
-      ownerName: 'Some name',
-      ownerReputation: 1432,
-    },
-  ];
+  const questions = useAppSelector(selectQuestions);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getQuestions(new Date(2018, 1, 1).getDate()));
+  }, []);
 
   const ref = useRef<HTMLDivElement>(null);
-  const [openedId, setOpenedId] = useState<null | number>(1);
+
+  // const [, drop] = useDrop(()=>(
+  //   {
+  //     accept: draggableTypes.QUESTION,
+  //     drop: () =>
+  //   }
+  // ));
+
+  const [openedId, setOpenedId] = useState<null | number>(null);
+  const [selectedId, setSelectedId] = useState<null | number>(null);
 
   useOnOutsideClick(ref, () => {
     setOpenedId(null);
+    setSelectedId(null);
   });
 
+  const handleQuestionClick = (id: number) => {
+    if (openedId !== id) {
+      setOpenedId(id);
+    } else {
+      setOpenedId(null);
+    }
+  };
 
-  const questionsToRender = questions.map(q => (
-    <Question key={q.questionId}
-              question={q}
-              opened={openedId === q.questionId}
-              onClick={() => {
-                if (openedId !== q.questionId) {
-                  setOpenedId(q.questionId);
-                } else {
-                  setOpenedId(null);
-                }
-              }} />
-  ));
+  const handleQuestionDoubleClick = (id: number) => {
+    // if (!selectedIndex) {
+    //   setSelectedIndex(index);
+    // } else if (selectedIndex !== index) {
+    //   //[questions[index], questions[selectedIndex]] = [questions[index], questions[selectedIndex]];
+    // } else {
+    //   setSelectedIndex(null);
+    // }
+  };
+
+
+  const questionsToRender = questions.map(q => {
+    const selected = (
+      () => {
+        if (!selectedId) {
+          return 'none';
+        }
+        return selectedId === q.question_id ? 'this' : 'other';
+      }
+    )();
+    return (
+      <Question key={q.question_id}
+                question={q}
+                opened={openedId === q.question_id}
+                selected={selected}
+                onClick={() => handleQuestionClick(q.question_id)}
+                onDoubleClick={() => handleQuestionDoubleClick(q.question_id)} />
+    );
+  });
 
   return (
     <div className={style.wrapper}

@@ -6,6 +6,13 @@
   &.correct {
     background-color: $c-green;
   }
+
+  &.this {
+    border: 2px solid $c-aqua;
+  }
+  &.other {
+    opacity: 0.6;
+  }
 }
 
 .question {

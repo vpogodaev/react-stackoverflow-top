@@ -36,5 +36,6 @@ module.exports = {
     'react/no-array-index-key': 'warn',
     '@typescript-eslint/ban-types': 'warn',
     'arrow-body-style': 'warn',
+    'default-param-last': 'off',
   },
 };
