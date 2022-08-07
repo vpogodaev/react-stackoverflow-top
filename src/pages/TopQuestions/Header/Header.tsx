@@ -1,14 +1,12 @@
 import React, { FC, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import style from './Header.module.scss';
-import 'react-datepicker/dist/react-datepicker.css';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { selectDateFromTicks } from '../../../store/selectors/questionsSelectors';
 import { changeDateFrom } from '../../../store/actions/actionCreators/questionActionCreators';
+import style from './Header.module.scss';
+import 'react-datepicker/dist/react-datepicker.css';
 
-type THeaderProps = {};
-
-export const Header: FC<THeaderProps> = ({}) => {
+export const Header: FC = () => {
   const currentDate = useAppSelector(selectDateFromTicks);
   const dispatch = useAppDispatch();
 

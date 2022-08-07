@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useOnOutsideClick } from '@shared/hooks/useOnOutsideClick';
-import { Question } from './Question/Question';
+import { DroppableQuestion } from '@components/Questions/DroppableQuestion/DroppableQuestion';
 import style from './Questions.module.scss';
 import { selectDateFrom, selectQuestions, selectTitle } from '../../store/selectors/questionsSelectors';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -10,16 +10,8 @@ import {
   getQuestions,
   swapQuestions,
 } from '../../store/actions/actionCreators/questionActionCreators';
-import { useDrop } from 'react-dnd';
-import { draggableTypes } from '@shared/draggableTypes';
-import { IStackQuestion } from '@entities/IQuestion';
-import { DroppableQuestion } from '@components/Questions/DroppableQuestion/DroppableQuestion';
-// import { useDrop } from 'react-dnd';
-// import { draggableTypes } from '@shared/draggableTypes';
 
-type TQuestionsProps = {};
-
-export const Questions: FC<TQuestionsProps> = ({}) => {
+export const Questions: FC = () => {
   const questions = useAppSelector(selectQuestions);
   const dispatch = useAppDispatch();
   const dateFrom = useAppSelector(selectDateFrom);
@@ -30,13 +22,6 @@ export const Questions: FC<TQuestionsProps> = ({}) => {
   }, []);
 
   const ref = useRef<HTMLDivElement>(null);
-
-  // const [, drop] = useDrop(()=>(
-  //   {
-  //     accept: draggableTypes.QUESTION,
-  //     drop: () =>
-  //   }
-  // ));
 
   const moveQuestion = useCallback((dragIndex: number) => {
     const dragQuestion = questions[dragIndex];

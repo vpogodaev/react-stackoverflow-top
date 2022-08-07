@@ -3,9 +3,7 @@ import { Questions } from '@components/Questions/Questions';
 import { Header } from '@pages/TopQuestions/Header/Header';
 import style from './TopQuestions.module.scss';
 
-type TTopQuestionsProps = {};
-
-export const TopQuestions: FC<TTopQuestionsProps> = ({}) => {
+export const TopQuestions: FC = () => {
   return (
     <main className={style.main}>
       <Header />

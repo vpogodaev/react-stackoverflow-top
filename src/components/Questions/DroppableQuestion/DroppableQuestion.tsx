@@ -4,7 +4,6 @@ import { draggableTypes } from '@shared/draggableTypes';
 import { useDrop } from 'react-dnd';
 import { changeQuestionPosition } from '../../../store/actions/actionCreators/questionActionCreators';
 import { useAppDispatch } from '../../../store/hooks';
-import style from './DropableQuestion.module.scss';
 
 type TDroppableQuestionProps = {
   moveQuestion: (dragIndex: number) => void;
