@@ -44,6 +44,13 @@ export type ChangeDateFrom = {
   newDate: number;
 }
 
+export const CHANGE_QUESTION_POSITION = 'questionsActionTypes/CHANGE_QUESTION_POSITION';
+export type ChangeQuestionPosition = {
+  type: typeof CHANGE_QUESTION_POSITION;
+  questionId: number;
+  otherQuestionIndex: number;
+}
+
 export type QuestionsAction =
   GetQuestionsAction
   | GetQuestionsRequestAction
@@ -51,4 +58,5 @@ export type QuestionsAction =
   | GetQuestionsFailureAction
   | SwapQuestions
   | ChangeQuestionScore
-  | ChangeDateFrom;
+  | ChangeDateFrom
+  | ChangeQuestionPosition;

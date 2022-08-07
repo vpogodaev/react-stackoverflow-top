@@ -1,10 +1,8 @@
 .wrapper {
   border: 1px solid $c-grey;
   border-radius: 8px;
-
-  &:not(:last-of-type) {
-    margin-bottom: 10px;
-  }
+  margin-bottom: 10px;
+  display: block;
 
   &.correct {
     background-color: $c-green-light;
@@ -13,6 +11,7 @@
   &.this {
     border: 2px solid $c-aqua;
   }
+
   &.other {
     opacity: 0.6;
   }
@@ -46,30 +45,6 @@
   .arrows {
     display: flex;
     flex-direction: column;
-
-    .arrow {
-      height: 24px;
-      cursor: pointer;
-      transition: $trans;
-
-      &.up {
-        transform: rotate(-90deg);
-      }
-
-      &.down {
-        transform: rotate(90deg);
-      }
-
-      &:hover {
-        &.up {
-          fill: $c-green;
-        }
-
-        &.down {
-          fill: $c-red;
-        }
-      }
-    }
   }
 
   .score {
@@ -84,20 +59,3 @@
   transition: height $trans ease-in-out;
   overflow: hidden;
 }
-
-.details {
-  border-top: 1px solid $c-grey;
-  margin: 10px;
-  padding-top: 10px;
-
-  .info {
-    display: grid;
-    grid-template-columns: min-content auto;
-    gap: 10px;
-
-    span {
-      white-space: nowrap;
-    }
-  }
-}
-

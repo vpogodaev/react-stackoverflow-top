@@ -1,7 +1,6 @@
 import { IStackQuestion } from '@entities/IQuestion';
 import { Reducer } from 'redux';
 import * as actions from '../actions/actionTypes/questionsActionTypes';
-import { CHANGE_QUESTION_SCORE } from '../actions/actionTypes/questionsActionTypes';
 
 export type QuestionsState = {
   questions: IStackQuestion[];
@@ -63,6 +62,21 @@ export const questionsReducer: Reducer<QuestionsState, actions.QuestionsAction> 
         ...state,
         dateFrom: action.newDate,
       };
+    case actions.CHANGE_QUESTION_POSITION: {
+      const { questionId, otherQuestionIndex } = action;
+      const { questions } = state;
+      const oldIndex = questions.findIndex(q => q.question_id === questionId);
+      const newIndex = questions.findIndex(q => q.question_id === otherQuestionIndex);
+      const question = questions[oldIndex];
+
+      const newQuestions = [...questions.slice(0, oldIndex), ...questions.slice(oldIndex + 1)];
+      const newQuestions2 = [...newQuestions.slice(0, newIndex), question, ...newQuestions.slice(newIndex)];
+
+      return {
+        ...state,
+        questions: newQuestions2,
+      };
+    }
     default:
       return { ...state };
   }

@@ -1,5 +1,6 @@
 import { IStackQuestion } from '@entities/IQuestion';
 import * as actions from '../actionTypes/questionsActionTypes';
+import { ChangeQuestionPosition } from '../actionTypes/questionsActionTypes';
 
 export const getQuestions = (dateFrom: number, title = 'react-redux'): actions.GetQuestionsAction => (
   {
@@ -49,5 +50,13 @@ export const changeDateFrom = (newDate: number): actions.ChangeDateFrom => (
   {
     type: actions.CHANGE_DATE_FROM,
     newDate,
+  }
+);
+
+export const changeQuestionPosition = (questionId: number, otherQuestionsIndex: number): actions.ChangeQuestionPosition => (
+  {
+    type: actions.CHANGE_QUESTION_POSITION,
+    questionId,
+    otherQuestionIndex: otherQuestionsIndex,
   }
 );

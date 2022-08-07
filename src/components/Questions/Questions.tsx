@@ -1,14 +1,19 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useOnOutsideClick } from '@shared/hooks/useOnOutsideClick';
 import { Question } from './Question/Question';
 import style from './Questions.module.scss';
 import { selectDateFrom, selectQuestions, selectTitle } from '../../store/selectors/questionsSelectors';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
+  changeQuestionPosition,
   changeQuestionScore,
   getQuestions,
   swapQuestions,
 } from '../../store/actions/actionCreators/questionActionCreators';
+import { useDrop } from 'react-dnd';
+import { draggableTypes } from '@shared/draggableTypes';
+import { IStackQuestion } from '@entities/IQuestion';
+import { DroppableQuestion } from '@components/Questions/DroppableQuestion/DroppableQuestion';
 // import { useDrop } from 'react-dnd';
 // import { draggableTypes } from '@shared/draggableTypes';
 
@@ -32,6 +37,11 @@ export const Questions: FC<TQuestionsProps> = ({}) => {
   //     drop: () =>
   //   }
   // ));
+
+  const moveQuestion = useCallback((dragIndex: number) => {
+    const dragQuestion = questions[dragIndex];
+    dispatch(changeQuestionPosition(dragQuestion.question_id, dragIndex));
+  }, [questions]);
 
   const [openedId, setOpenedId] = useState<null | number>(null);
   const [selectedId, setSelectedId] = useState<null | number>(null);
@@ -64,7 +74,7 @@ export const Questions: FC<TQuestionsProps> = ({}) => {
     dispatch(changeQuestionScore(id, newScore));
   };
 
-  const questionsToRender = questions.map(q => {
+  const questionsToRender = questions.map((q, i) => {
     const selected = (
       () => {
         if (!selectedId) {
@@ -75,14 +85,15 @@ export const Questions: FC<TQuestionsProps> = ({}) => {
     )();
 
     return (
-      <Question key={q.question_id}
-                question={q}
-                opened={openedId === q.question_id}
-                selected={selected}
-                onClick={() => handleQuestionClick(q.question_id)}
-                onDoubleClick={() => handleQuestionDoubleClick(q.question_id)}
-                onUpScoreClicked={() => handleScoreChange(q.question_id, q.score + 1)}
-                onDownScoreClicked={() => handleScoreChange(q.question_id, q.score - 1)} />
+      <DroppableQuestion key={q.question_id}
+                         question={q}
+                         opened={openedId === q.question_id}
+                         selected={selected}
+                         onClick={() => handleQuestionClick(q.question_id)}
+                         onDoubleClick={() => handleQuestionDoubleClick(q.question_id)}
+                         onUpScoreClicked={() => handleScoreChange(q.question_id, q.score + 1)}
+                         onDownScoreClicked={() => handleScoreChange(q.question_id, q.score - 1)}
+                         moveQuestion={moveQuestion} />
     );
   });
 

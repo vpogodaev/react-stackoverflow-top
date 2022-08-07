@@ -1,0 +1,15 @@
+.details {
+  border-top: 1px solid $c-grey;
+  margin: 10px;
+  padding-top: 10px;
+
+  .info {
+    display: grid;
+    grid-template-columns: min-content auto;
+    gap: 10px;
+
+    span {
+      white-space: nowrap;
+    }
+  }
+}

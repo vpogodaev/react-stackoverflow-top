@@ -1,0 +1,23 @@
+.arrow {
+  height: 24px;
+  cursor: pointer;
+  transition: $trans;
+
+  &.up {
+    transform: rotate(-90deg);
+  }
+
+  &.down {
+    transform: rotate(90deg);
+  }
+
+  &:hover {
+    &.up {
+      fill: $c-green;
+    }
+
+    &.down {
+      fill: $c-red;
+    }
+  }
+}

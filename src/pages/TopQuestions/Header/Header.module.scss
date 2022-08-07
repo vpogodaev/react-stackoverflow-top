@@ -18,4 +18,9 @@
 
 .btn {
   width: 100px;
+  transition: $trans all;
+
+  &.disabled {
+    opacity: 0;
+  }
 }

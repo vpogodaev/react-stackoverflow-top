@@ -1,9 +1,12 @@
-import React, { FC, MouseEventHandler, useMemo, MouseEvent, useRef, useEffect, useState, forwardRef } from 'react';
-import { ArrowRight } from '@components/icons/ArrowRight';
+import React, { FC, MouseEventHandler, useMemo, MouseEvent, useRef, useEffect, useState } from 'react';
 import { IStackQuestion } from '@entities/IQuestion';
+import { useDrag } from 'react-dnd';
+import { draggableTypes } from '@shared/draggableTypes';
+import { Arrow } from '@components/Questions/Arrow/Arrow';
+import { Details } from '@components/Questions/Details/Details';
 import style from './Question.module.scss';
 
-type TQuestionProps = {
+export type TQuestionProps = {
   question: IStackQuestion;
   opened: boolean;
   onClick: MouseEventHandler<HTMLDivElement>;
@@ -13,62 +16,15 @@ type TQuestionProps = {
   onDownScoreClicked: MouseEventHandler<SVGSVGElement>;
 };
 
-type TArrowProps = {
-  direction: 'up' | 'down';
-  onClick: MouseEventHandler<SVGSVGElement>;
-}
-
-const Arrow: FC<TArrowProps> = ({ direction, onClick }) => {
-  return (
-    <ArrowRight className={`${style.arrow} ${style[direction]}`}
-                role="button"
-                onClick={onClick} />
-  );
-};
-
-type TDetailsItemProps = {
-  infoLabel: string;
-  info: string;
-}
-
-const DetailsItem: FC<TDetailsItemProps> = ({ infoLabel, info }) => {
-  return (
-    <div className={style.info}>
-      <span>{infoLabel}</span>
-      <span>{info}</span>
-    </div>
-  );
-};
-
-type TDetailsProps = {
-  details: TDetailsItemProps[];
-}
-
-const Details = forwardRef<HTMLDivElement, TDetailsProps>(({ details }, ref) => {
-  const items = details.map((d, i) => (
-    <DetailsItem key={i}
-                 infoLabel={d.infoLabel}
-                 info={d.info} />
-  ));
-
-  return (
-    <div className={`${style.details}`}
-         ref={ref}>
-      {items}
-    </div>
-  );
-
-});
-
 export const Question: FC<TQuestionProps> = ({
   question, opened, onClick, onDoubleClick, selected, onUpScoreClicked, onDownScoreClicked,
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const detailsRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
   const timer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const details = ref?.current;
+    const details = detailsRef?.current;
     let elHeight = details?.getBoundingClientRect().height || 0;
 
     if (elHeight && details) {
@@ -126,21 +82,21 @@ export const Question: FC<TQuestionProps> = ({
     ]
   ), [question.question_id]);
 
-  // const [{ isDragging }, drag] = useDrag(() => (
-  //   {
-  //     type: draggableTypes.QUESTION,
-  //     collect: (monitor) => (
-  //       {
-  //         isDragging: !!monitor.isDragging(),
-  //       }
-  //     ),
-  //   }
-  // ));
-  // ${isDragging ? ` ${style.dragging}` : ''}
-  // ref={drag}
+  const [{ isDragging }, drag] = useDrag(() => (
+    {
+      type: draggableTypes.QUESTION,
+      collect: (monitor) => (
+        {
+          isDragging: !!monitor.isDragging(),
+        }
+      ),
+      item: question,
+    }
+  ));
 
   return (
-    <div className={`${style.wrapper} ${style[selected]}${question.is_answered ? ` ${style.correct}` : ''}`}>
+    <div className={`${style.wrapper} ${style[selected]}${question.is_answered ? ` ${style.correct}` : ''}${isDragging ? ` ${style.dragging}` : ''}`}
+         ref={drag}>
       <div className={style.question}
            onClick={handleQuestionClick}
            onDoubleClick={handleQuestionDoubleClick}>
@@ -163,7 +119,7 @@ export const Question: FC<TQuestionProps> = ({
       <div className={style.collapsable}
            style={{ height }}>
         <Details details={details}
-                 ref={ref} />
+                 ref={detailsRef} />
       </div>
     </div>
   );
