@@ -6,7 +6,7 @@ export type QuestionsState = {
   questions: IStackQuestion[];
   dateFrom: number;
   title: string;
-}
+};
 
 export const questionsInitialState: QuestionsState = {
   questions: [],
@@ -14,10 +14,10 @@ export const questionsInitialState: QuestionsState = {
   title: 'react-redux',
 };
 
-export const questionsReducer: Reducer<QuestionsState, actions.QuestionsAction> = (
-  state = questionsInitialState,
-  action: actions.QuestionsAction,
-) => {
+export const questionsReducer: Reducer<
+  QuestionsState,
+  actions.QuestionsAction
+> = (state = questionsInitialState, action: actions.QuestionsAction) => {
   switch (action?.type) {
     case actions.GET_QUESTIONS:
     case actions.GET_QUESTIONS_REQUEST:
@@ -34,9 +34,16 @@ export const questionsReducer: Reducer<QuestionsState, actions.QuestionsAction> 
       const { question1Id, question2Id } = action;
       const questions = [...state.questions];
 
-      const question1Index = questions.findIndex(q => q.question_id === question1Id);
-      const question2Index = questions.findIndex(q => q.question_id === question2Id);
-      [questions[question1Index], questions[question2Index]] = [questions[question2Index], questions[question1Index]];
+      const question1Index = questions.findIndex(
+        (q) => q.question_id === question1Id,
+      );
+      const question2Index = questions.findIndex(
+        (q) => q.question_id === question2Id,
+      );
+      [questions[question1Index], questions[question2Index]] = [
+        questions[question2Index],
+        questions[question1Index],
+      ];
 
       return {
         ...state,
@@ -47,7 +54,7 @@ export const questionsReducer: Reducer<QuestionsState, actions.QuestionsAction> 
       const { questionId, score } = action;
 
       const questions = [...state.questions];
-      const question = questions.find(q => q.question_id === questionId);
+      const question = questions.find((q) => q.question_id === questionId);
       if (question) {
         question.score = score;
       }
@@ -65,12 +72,21 @@ export const questionsReducer: Reducer<QuestionsState, actions.QuestionsAction> 
     case actions.CHANGE_QUESTION_POSITION: {
       const { questionId, otherQuestionIndex } = action;
       const { questions } = state;
-      const oldIndex = questions.findIndex(q => q.question_id === questionId);
-      const newIndex = questions.findIndex(q => q.question_id === otherQuestionIndex);
+      const oldIndex = questions.findIndex((q) => q.question_id === questionId);
+      const newIndex = questions.findIndex(
+        (q) => q.question_id === otherQuestionIndex,
+      );
       const question = questions[oldIndex];
 
-      const newQuestions = [...questions.slice(0, oldIndex), ...questions.slice(oldIndex + 1)];
-      const newQuestions2 = [...newQuestions.slice(0, newIndex), question, ...newQuestions.slice(newIndex)];
+      const newQuestions = [
+        ...questions.slice(0, oldIndex),
+        ...questions.slice(oldIndex + 1),
+      ];
+      const newQuestions2 = [
+        ...newQuestions.slice(0, newIndex),
+        question,
+        ...newQuestions.slice(newIndex),
+      ];
 
       return {
         ...state,

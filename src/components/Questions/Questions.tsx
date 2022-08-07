@@ -2,7 +2,11 @@ import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useOnOutsideClick } from '@shared/hooks/useOnOutsideClick';
 import { DroppableQuestion } from '@components/Questions/DroppableQuestion/DroppableQuestion';
 import style from './Questions.module.scss';
-import { selectDateFrom, selectQuestions, selectTitle } from '../../store/selectors/questionsSelectors';
+import {
+  selectDateFrom,
+  selectQuestions,
+  selectTitle,
+} from '../../store/selectors/questionsSelectors';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   changeQuestionPosition,
@@ -23,10 +27,13 @@ export const Questions: FC = () => {
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const moveQuestion = useCallback((dragIndex: number) => {
-    const dragQuestion = questions[dragIndex];
-    dispatch(changeQuestionPosition(dragQuestion.question_id, dragIndex));
-  }, [questions]);
+  const moveQuestion = useCallback(
+    (dragIndex: number) => {
+      const dragQuestion = questions[dragIndex];
+      dispatch(changeQuestionPosition(dragQuestion.question_id, dragIndex));
+    },
+    [questions],
+  );
 
   const [openedId, setOpenedId] = useState<null | number>(null);
   const [selectedId, setSelectedId] = useState<null | number>(null);
@@ -60,31 +67,33 @@ export const Questions: FC = () => {
   };
 
   const questionsToRender = questions.map((q) => {
-    const selected = (
-      () => {
-        if (!selectedId) {
-          return 'none';
-        }
-        return selectedId === q.question_id ? 'this' : 'other';
+    const selected = (() => {
+      if (!selectedId) {
+        return 'none';
       }
-    )();
+      return selectedId === q.question_id ? 'this' : 'other';
+    })();
 
     return (
-      <DroppableQuestion key={q.question_id}
-                         question={q}
-                         opened={openedId === q.question_id}
-                         selected={selected}
-                         onClick={() => handleQuestionClick(q.question_id)}
-                         onDoubleClick={() => handleQuestionDoubleClick(q.question_id)}
-                         onUpScoreClicked={() => handleScoreChange(q.question_id, q.score + 1)}
-                         onDownScoreClicked={() => handleScoreChange(q.question_id, q.score - 1)}
-                         moveQuestion={moveQuestion} />
+      <DroppableQuestion
+        key={q.question_id}
+        question={q}
+        opened={openedId === q.question_id}
+        selected={selected}
+        onClick={() => handleQuestionClick(q.question_id)}
+        onDoubleClick={() => handleQuestionDoubleClick(q.question_id)}
+        onUpScoreClicked={() => handleScoreChange(q.question_id, q.score + 1)}
+        onDownScoreClicked={() => handleScoreChange(q.question_id, q.score - 1)}
+        moveQuestion={moveQuestion}
+      />
     );
   });
 
   return (
-    <div className={style.wrapper}
-         ref={ref}>
+    <div
+      className={style.wrapper}
+      ref={ref}
+    >
       {questionsToRender}
     </div>
   );

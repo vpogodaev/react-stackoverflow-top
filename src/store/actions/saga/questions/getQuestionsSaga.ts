@@ -1,5 +1,8 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
-import { GET_QUESTIONS, GetQuestionsAction } from '../../actionTypes/questionsActionTypes';
+import {
+  GET_QUESTIONS,
+  GetQuestionsAction,
+} from '../../actionTypes/questionsActionTypes';
 import {
   getQuestionsFailure,
   getQuestionsRequest,

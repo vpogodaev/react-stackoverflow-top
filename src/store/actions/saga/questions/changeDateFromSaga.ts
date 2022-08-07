@@ -3,9 +3,7 @@ import {
   CHANGE_DATE_FROM,
   ChangeDateFrom,
 } from '../../actionTypes/questionsActionTypes';
-import {
-  getQuestions,
-} from '../../actionCreators/questionActionCreators';
+import { getQuestions } from '../../actionCreators/questionActionCreators';
 
 function* onChangeDateFrom({ newDate }: ChangeDateFrom) {
   yield put(getQuestions(newDate));

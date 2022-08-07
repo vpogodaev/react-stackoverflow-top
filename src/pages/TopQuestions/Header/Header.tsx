@@ -30,15 +30,21 @@ export const Header: FC = () => {
 
   return (
     <div className={style.header}>
-      <span className={style.text}>5 самых популярных вопросов на StackoverFlow, содержащих &quot;react-redux&quot; в наименовании, начиная
-          с </span>
+      <span className={style.text}>
+        5 самых популярных вопросов на StackoverFlow, содержащих
+        &quot;react-redux&quot; в наименовании, начиная с{' '}
+      </span>
       <div className={style.config}>
-        <DatePicker selected={dateFrom}
-                    onChange={handleDateChange} />
-        <button type="button"
-                onClick={handleSearchClicked}
-                className={`${style.btn}${btnDisabled ? ` ${style.disabled}` : ''} `}
-                disabled={btnDisabled}>
+        <DatePicker
+          selected={dateFrom}
+          onChange={handleDateChange}
+        />
+        <button
+          type="button"
+          onClick={handleSearchClicked}
+          className={`${style.btn}${btnDisabled ? ` ${style.disabled}` : ''} `}
+          disabled={btnDisabled}
+        >
           Поиск
         </button>
       </div>

@@ -5,54 +5,59 @@ export type GetQuestionsAction = {
   type: typeof GET_QUESTIONS;
   title: string;
   dateFrom: number;
-}
+};
 
-export const GET_QUESTIONS_REQUEST = 'questionsActionTypes/GET_QUESTIONS_REQUEST';
+export const GET_QUESTIONS_REQUEST =
+  'questionsActionTypes/GET_QUESTIONS_REQUEST';
 export type GetQuestionsRequestAction = {
   type: typeof GET_QUESTIONS_REQUEST;
-}
+};
 
-export const GET_QUESTIONS_SUCCESS = 'questionsActionTypes/GET_QUESTIONS_SUCCESS';
+export const GET_QUESTIONS_SUCCESS =
+  'questionsActionTypes/GET_QUESTIONS_SUCCESS';
 export type GetQuestionsSuccessAction = {
   type: typeof GET_QUESTIONS_SUCCESS;
   questions: IStackQuestion[];
-}
+};
 
-export const GET_QUESTIONS_FAILURE = 'questionsActionTypes/GET_QUESTIONS_FAILURE';
+export const GET_QUESTIONS_FAILURE =
+  'questionsActionTypes/GET_QUESTIONS_FAILURE';
 export type GetQuestionsFailureAction = {
   type: typeof GET_QUESTIONS_FAILURE;
   error: string;
-}
+};
 
 export const SWAP_QUESTIONS = 'questionsActionTypes/SWAP_QUESTIONS';
 export type SwapQuestions = {
   type: typeof SWAP_QUESTIONS;
   question1Id: number;
   question2Id: number;
-}
+};
 
-export const CHANGE_QUESTION_SCORE = 'questionsActionTypes/CHANGE_QUESTION_SCORE';
+export const CHANGE_QUESTION_SCORE =
+  'questionsActionTypes/CHANGE_QUESTION_SCORE';
 export type ChangeQuestionScore = {
   type: typeof CHANGE_QUESTION_SCORE;
   questionId: number;
   score: number;
-}
+};
 
 export const CHANGE_DATE_FROM = 'questionsActionTypes/CHANGE_DATE_FROM';
 export type ChangeDateFrom = {
   type: typeof CHANGE_DATE_FROM;
   newDate: number;
-}
+};
 
-export const CHANGE_QUESTION_POSITION = 'questionsActionTypes/CHANGE_QUESTION_POSITION';
+export const CHANGE_QUESTION_POSITION =
+  'questionsActionTypes/CHANGE_QUESTION_POSITION';
 export type ChangeQuestionPosition = {
   type: typeof CHANGE_QUESTION_POSITION;
   questionId: number;
   otherQuestionIndex: number;
-}
+};
 
 export type QuestionsAction =
-  GetQuestionsAction
+  | GetQuestionsAction
   | GetQuestionsRequestAction
   | GetQuestionsSuccessAction
   | GetQuestionsFailureAction

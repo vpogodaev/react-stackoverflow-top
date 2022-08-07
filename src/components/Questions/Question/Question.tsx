@@ -1,4 +1,12 @@
-import React, { FC, MouseEventHandler, useMemo, MouseEvent, useRef, useEffect, useState } from 'react';
+import React, {
+  FC,
+  MouseEventHandler,
+  useMemo,
+  MouseEvent,
+  useRef,
+  useEffect,
+  useState,
+} from 'react';
 import { IStackQuestion } from '@entities/IQuestion';
 import { useDrag } from 'react-dnd';
 import { draggableTypes } from '@shared/draggableTypes';
@@ -17,7 +25,13 @@ export type TQuestionProps = {
 };
 
 export const Question: FC<TQuestionProps> = ({
-  question, opened, onClick, onDoubleClick, selected, onUpScoreClicked, onDownScoreClicked,
+  question,
+  opened,
+  onClick,
+  onDoubleClick,
+  selected,
+  onUpScoreClicked,
+  onDownScoreClicked,
 }) => {
   const detailsRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
@@ -31,10 +45,11 @@ export const Question: FC<TQuestionProps> = ({
     if (elHeight && details) {
       const elStyle = window.getComputedStyle(details);
       const parse = (v: string) => parseInt(v, 10);
-      elHeight += parse(elStyle.paddingTop)
-                  + parse(elStyle.paddingBottom)
-                  + parse(elStyle.marginTop)
-                  + parse(elStyle.marginBottom);
+      elHeight +=
+        parse(elStyle.paddingTop) +
+        parse(elStyle.paddingBottom) +
+        parse(elStyle.marginTop) +
+        parse(elStyle.marginBottom);
     }
     if (opened) {
       setHeight(elHeight);
@@ -68,60 +83,73 @@ export const Question: FC<TQuestionProps> = ({
     onDoubleClick(e);
   };
 
-  const details = useMemo(() => (
-    [
+  const details = useMemo(
+    () => [
       {
         infoLabel: 'Имя создателя вопроса:',
         info: question.owner.display_name,
-      }, {
-      infoLabel: 'Рейтинг создателя вопроса:',
-      info: question.owner.reputation?.toString(),
-    }, {
-      infoLabel: 'Количество просмотров:',
-      info: question.view_count?.toString(),
-    },
-    ]
-  ), [question.question_id]);
+      },
+      {
+        infoLabel: 'Рейтинг создателя вопроса:',
+        info: question.owner.reputation?.toString(),
+      },
+      {
+        infoLabel: 'Количество просмотров:',
+        info: question.view_count?.toString(),
+      },
+    ],
+    [question.question_id],
+  );
 
-  const [{ isDragging }, drag] = useDrag(() => (
-    {
-      type: draggableTypes.QUESTION,
-      collect: (monitor) => (
-        {
-          isDragging: !!monitor.isDragging(),
-        }
-      ),
-      item: question,
-    }
-  ));
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: draggableTypes.QUESTION,
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+    item: question,
+  }));
 
   return (
-    <div className={`${style.wrapper} ${style[selected]}${question.is_answered ? ` ${style.correct}` : ''}${isDragging ? ` ${style.dragging}` : ''}`}
-         ref={drag}>
+    <div
+      className={`${style.wrapper} ${style[selected]}${
+        question.is_answered ? ` ${style.correct}` : ''
+      }${isDragging ? ` ${style.dragging}` : ''}`}
+      ref={drag}
+    >
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-      <div className={style.question}
-           onClick={handleQuestionClick}
-           onDoubleClick={handleQuestionDoubleClick}>
-        <div className={style.title}
-             title={question.title}>
+      <div
+        className={style.question}
+        onClick={handleQuestionClick}
+        onDoubleClick={handleQuestionDoubleClick}
+      >
+        <div
+          className={style.title}
+          title={question.title}
+        >
           {question.title}
         </div>
         <div className={style.right}>
-          <div className={style.score}>
-            {question.score}
-          </div>
+          <div className={style.score}>{question.score}</div>
           <div className={style.arrows}>
-            <Arrow direction="up"
-                   onClick={handleUpClick} />
-            <Arrow direction="down"
-                   onClick={handleDownClick} />
+            <Arrow
+              direction="up"
+              onClick={handleUpClick}
+            />
+            <Arrow
+              direction="down"
+              onClick={handleDownClick}
+            />
           </div>
         </div>
       </div>
-      <div className={style.collapsable}
-           style={{ height }}>
-        <Details details={details}
-                 ref={detailsRef} />
+      <div
+        className={style.collapsable}
+        style={{ height }}
+      >
+        <Details
+          details={details}
+          ref={detailsRef}
+        />
       </div>
     </div>
   );

@@ -1,5 +1,8 @@
 import React, { FC } from 'react';
-import { Question, TQuestionProps } from '@components/Questions/Question/Question';
+import {
+  Question,
+  TQuestionProps,
+} from '@components/Questions/Question/Question';
 import { draggableTypes } from '@shared/draggableTypes';
 import { useDrop } from 'react-dnd';
 import { changeQuestionPosition } from '../../../store/actions/actionCreators/questionActionCreators';
@@ -16,15 +19,15 @@ export const DroppableQuestion: FC<TDroppableQuestionProps> = ({ ...rest }) => {
     dispatch(changeQuestionPosition(questionId, rest.question.question_id));
   };
 
-  const [, drop] = useDrop(() => (
-    {
-      accept: draggableTypes.QUESTION,
-      collect: (monitor) => (
-        { isOver: !!monitor.isOver() }
-      ),
-      hover: (q: any) => handleDrop(q?.question_id),
-    }
-  ));
+  const [, drop] = useDrop(() => ({
+    accept: draggableTypes.QUESTION,
+    collect: (monitor) => ({ isOver: !!monitor.isOver() }),
+    hover: (q: any) => handleDrop(q?.question_id),
+  }));
 
-  return <div ref={drop}><Question {...rest} /></div>;
+  return (
+    <div ref={drop}>
+      <Question {...rest} />
+    </div>
+  );
 };

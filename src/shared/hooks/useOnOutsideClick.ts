@@ -2,14 +2,14 @@ import { RefObject, useEffect } from 'react';
 
 export const useOnOutsideClick = (
   ref: RefObject<HTMLElement>,
-  onClick: (event: MouseEvent) => void
+  onClick: (event: MouseEvent) => void,
 ) => {
   useEffect(() => {
     const listener = (e: MouseEvent) => {
       if (
         !(e.target instanceof Element) ||
         (e.target instanceof Element &&
-         (!ref.current || ref.current.contains(e.target)))
+          (!ref.current || ref.current.contains(e.target)))
       ) {
         return;
       }

@@ -5,13 +5,15 @@ import style from './Arrow.module.scss';
 type TArrowProps = {
   direction: 'up' | 'down';
   onClick: MouseEventHandler<SVGSVGElement>;
-}
+};
 
 export const Arrow: FC<TArrowProps> = ({ direction, onClick }) => {
   return (
-    <ArrowRight className={`${style.arrow} ${style[direction]}`}
-                role="button"
-                onClick={onClick}
-                onDoubleClick={(e) => e.stopPropagation()} />
+    <ArrowRight
+      className={`${style.arrow} ${style[direction]}`}
+      role="button"
+      onClick={onClick}
+      onDoubleClick={(e) => e.stopPropagation()}
+    />
   );
 };
