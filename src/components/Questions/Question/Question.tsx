@@ -118,10 +118,10 @@ export const Question: FC<TQuestionProps> = ({
         info: question.owner.display_name,
       }, {
       infoLabel: 'Рейтинг создателя вопроса:',
-      info: question.owner.reputation.toString(),
+      info: question.owner.reputation?.toString(),
     }, {
       infoLabel: 'Количество просмотров:',
-      info: question.view_count.toString(),
+      info: question.view_count?.toString(),
     },
     ]
   ), [question.question_id]);

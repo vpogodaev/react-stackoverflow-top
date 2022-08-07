@@ -1,0 +1,21 @@
+.header {
+  margin-bottom: 25px;
+  display: block;
+}
+
+.text {
+  padding-right: 25px;
+  font-size: 32px;
+}
+
+.config {
+  width: min-content;
+  display: inline-grid;
+  grid-template-columns: min-content min-content;
+  gap: 25px;
+  align-items: start;
+}
+
+.btn {
+  width: 100px;
+}

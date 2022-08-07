@@ -1,4 +1,4 @@
-import { put, call, takeEvery } from "redux-saga/effects";
+import { put, call, takeEvery } from 'redux-saga/effects';
 import { GET_QUESTIONS, GetQuestionsAction } from '../../actionTypes/questionsActionTypes';
 import {
   getQuestionsFailure,
@@ -7,7 +7,7 @@ import {
 } from '../../actionCreators/questionActionCreators';
 import { fetchQuestions } from '../../../../services/api/questionsApi';
 
-function* onGetQuestions({title, dateFrom}: GetQuestionsAction) {
+function* onGetQuestions({ title, dateFrom }: GetQuestionsAction) {
   try {
     yield put(getQuestionsRequest());
     const { data } = yield call(fetchQuestions, title, dateFrom);

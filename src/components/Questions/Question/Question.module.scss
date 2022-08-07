@@ -1,7 +1,10 @@
 .wrapper {
   border: 1px solid $c-grey;
-  //padding: 10px;
   border-radius: 8px;
+
+  &:not(:last-of-type) {
+    margin-bottom: 10px;
+  }
 
   &.correct {
     background-color: $c-green-light;

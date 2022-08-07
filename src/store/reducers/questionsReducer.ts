@@ -5,10 +5,14 @@ import { CHANGE_QUESTION_SCORE } from '../actions/actionTypes/questionsActionTyp
 
 export type QuestionsState = {
   questions: IStackQuestion[];
+  dateFrom: number;
+  title: string;
 }
 
 export const questionsInitialState: QuestionsState = {
   questions: [],
+  dateFrom: new Date(2018, 0, 1).getTime() / 1000,
+  title: 'react-redux',
 };
 
 export const questionsReducer: Reducer<QuestionsState, actions.QuestionsAction> = (
@@ -54,6 +58,11 @@ export const questionsReducer: Reducer<QuestionsState, actions.QuestionsAction> 
         questions: [...questions],
       };
     }
+    case actions.CHANGE_DATE_FROM:
+      return {
+        ...state,
+        dateFrom: action.newDate,
+      };
     default:
       return { ...state };
   }

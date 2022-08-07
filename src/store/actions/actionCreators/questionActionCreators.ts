@@ -44,3 +44,10 @@ export const changeQuestionScore = (questionId: number, score: number): actions.
     score,
   }
 );
+
+export const changeDateFrom = (newDate: number): actions.ChangeDateFrom => (
+  {
+    type: actions.CHANGE_DATE_FROM,
+    newDate,
+  }
+);

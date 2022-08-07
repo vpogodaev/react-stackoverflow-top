@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 import { useOnOutsideClick } from '@shared/hooks/useOnOutsideClick';
 import { Question } from './Question/Question';
 import style from './Questions.module.scss';
-import { selectQuestions } from '../../store/selectors/questionsSelectors';
+import { selectDateFrom, selectQuestions, selectTitle } from '../../store/selectors/questionsSelectors';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   changeQuestionScore,
@@ -17,9 +17,11 @@ type TQuestionsProps = {};
 export const Questions: FC<TQuestionsProps> = ({}) => {
   const questions = useAppSelector(selectQuestions);
   const dispatch = useAppDispatch();
+  const dateFrom = useAppSelector(selectDateFrom);
+  const title = useAppSelector(selectTitle);
 
   useEffect(() => {
-    dispatch(getQuestions(new Date(2018, 1, 1).getDate()));
+    dispatch(getQuestions(dateFrom, title));
   }, []);
 
   const ref = useRef<HTMLDivElement>(null);

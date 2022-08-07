@@ -38,10 +38,17 @@ export type ChangeQuestionScore = {
   score: number;
 }
 
+export const CHANGE_DATE_FROM = 'questionsActionTypes/CHANGE_DATE_FROM';
+export type ChangeDateFrom = {
+  type: typeof CHANGE_DATE_FROM;
+  newDate: number;
+}
+
 export type QuestionsAction =
   GetQuestionsAction
   | GetQuestionsRequestAction
   | GetQuestionsSuccessAction
   | GetQuestionsFailureAction
   | SwapQuestions
-  | ChangeQuestionScore;
+  | ChangeQuestionScore
+  | ChangeDateFrom;
