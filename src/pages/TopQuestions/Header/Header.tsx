@@ -1,10 +1,11 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { selectDateFromTicks } from '@store/selectors/questionFiltersSelectors';
 import { getQuestions } from '@store/actions/actionCreators/questionsActionCreators';
-import style from './Header.module.scss';
 import 'react-datepicker/dist/react-datepicker.css';
+import { dateTimeToTicks } from '@services/utils/dateTimeToTicks';
+import style from './Header.module.scss';
 
 export const Header: FC = () => {
   const currentDate = useAppSelector(selectDateFromTicks);
@@ -12,20 +13,17 @@ export const Header: FC = () => {
 
   const [dateFrom, setDateFrom] = useState(new Date(currentDate));
 
-  const [btnDisabled, setBtnDisabled] = useState(true);
+  const isBtnDisabled = useMemo(
+    () => currentDate === dateFrom.getTime(),
+    [dateFrom.getTime(), currentDate],
+  );
 
   const handleDateChange = (date: Date) => {
     setDateFrom(date);
-    if (currentDate !== date.getTime()) {
-      setBtnDisabled(false);
-    } else {
-      setBtnDisabled(true);
-    }
   };
 
   const handleSearchClicked = () => {
-    dispatch(getQuestions((dateFrom.getTime() / 1000)));
-    setBtnDisabled(true);
+    dispatch(getQuestions(dateTimeToTicks(dateFrom)));
   };
 
   return (
@@ -42,8 +40,10 @@ export const Header: FC = () => {
         <button
           type="button"
           onClick={handleSearchClicked}
-          className={`${style.btn}${btnDisabled ? ` ${style.disabled}` : ''} `}
-          disabled={btnDisabled}
+          className={`${style.btn}${
+            isBtnDisabled ? ` ${style.disabled}` : ''
+          } `}
+          disabled={isBtnDisabled}
         >
           Поиск
         </button>

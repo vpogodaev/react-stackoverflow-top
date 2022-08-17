@@ -1,4 +1,5 @@
 import { Reducer } from 'redux';
+import { dateTimeToTicks } from '@services/utils/dateTimeToTicks';
 import * as actions from '../actions/actionTypes/questionFiltersActionTypes';
 
 export type QuestionFiltersState = {
@@ -7,7 +8,7 @@ export type QuestionFiltersState = {
 };
 
 export const questionFiltersInitialState: QuestionFiltersState = {
-  dateFrom: new Date(2018, 0, 1).getTime() / 1000,
+  dateFrom: dateTimeToTicks(new Date(2018, 0, 1)),
   title: 'react-redux',
 };
 
