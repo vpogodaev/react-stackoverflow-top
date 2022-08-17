@@ -25,6 +25,18 @@
       ],
       "@shared/*": [
         "shared/*"
+      ],
+      "@services": [
+        "services"
+      ],
+      "@services/*": [
+        "services/*"
+      ],
+      "@store": [
+        "store"
+      ],
+      "@store/*": [
+        "store/*"
       ]
     }
   }

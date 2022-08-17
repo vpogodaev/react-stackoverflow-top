@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
 import DatePicker from 'react-datepicker';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { selectDateFromTicks } from '../../../store/selectors/questionsSelectors';
-import { changeDateFrom } from '../../../store/actions/actionCreators/questionActionCreators';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { selectDateFromTicks } from '@store/selectors/questionFiltersSelectors';
+import { getQuestions } from '@store/actions/actionCreators/questionsActionCreators';
 import style from './Header.module.scss';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -24,7 +24,7 @@ export const Header: FC = () => {
   };
 
   const handleSearchClicked = () => {
-    dispatch(changeDateFrom(dateFrom.getTime() / 1000));
+    dispatch(getQuestions((dateFrom.getTime() / 1000)));
     setBtnDisabled(true);
   };
 

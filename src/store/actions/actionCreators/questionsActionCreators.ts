@@ -1,5 +1,5 @@
-import { IStackQuestion } from '@entities/IQuestion';
 import * as actions from '../actionTypes/questionsActionTypes';
+import { IStateQuestion } from '../../entities/IStateQuestion';
 
 export const getQuestions = (
   dateFrom: number,
@@ -15,7 +15,7 @@ export const getQuestionsRequest = (): actions.GetQuestionsRequestAction => ({
 });
 
 export const getQuestionsSuccess = (
-  questions: IStackQuestion[],
+  questions: IStateQuestion[],
 ): actions.GetQuestionsSuccessAction => ({
   type: actions.GET_QUESTIONS_SUCCESS,
   questions,
@@ -46,16 +46,11 @@ export const changeQuestionScore = (
   score,
 });
 
-export const changeDateFrom = (newDate: number): actions.ChangeDateFrom => ({
-  type: actions.CHANGE_DATE_FROM,
-  newDate,
-});
-
 export const changeQuestionPosition = (
-  questionId: number,
-  otherQuestionsIndex: number,
+  question1Id: number,
+  question2Id: number,
 ): actions.ChangeQuestionPosition => ({
   type: actions.CHANGE_QUESTION_POSITION,
-  questionId,
-  otherQuestionIndex: otherQuestionsIndex,
+  question1Id,
+  question2Id,
 });

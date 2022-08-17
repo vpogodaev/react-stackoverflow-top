@@ -1,4 +1,4 @@
-import { IStackQuestion } from '@entities/IQuestion';
+import { IStateQuestion } from '../../entities/IStateQuestion';
 
 export const GET_QUESTIONS = 'questionsActionTypes/GET_QUESTIONS';
 export type GetQuestionsAction = {
@@ -17,7 +17,7 @@ export const GET_QUESTIONS_SUCCESS =
   'questionsActionTypes/GET_QUESTIONS_SUCCESS';
 export type GetQuestionsSuccessAction = {
   type: typeof GET_QUESTIONS_SUCCESS;
-  questions: IStackQuestion[];
+  questions: IStateQuestion[];
 };
 
 export const GET_QUESTIONS_FAILURE =
@@ -42,18 +42,12 @@ export type ChangeQuestionScore = {
   score: number;
 };
 
-export const CHANGE_DATE_FROM = 'questionsActionTypes/CHANGE_DATE_FROM';
-export type ChangeDateFrom = {
-  type: typeof CHANGE_DATE_FROM;
-  newDate: number;
-};
-
 export const CHANGE_QUESTION_POSITION =
   'questionsActionTypes/CHANGE_QUESTION_POSITION';
 export type ChangeQuestionPosition = {
   type: typeof CHANGE_QUESTION_POSITION;
-  questionId: number;
-  otherQuestionIndex: number;
+  question1Id: number;
+  question2Id: number;
 };
 
 export type QuestionsAction =
@@ -63,5 +57,4 @@ export type QuestionsAction =
   | GetQuestionsFailureAction
   | SwapQuestions
   | ChangeQuestionScore
-  | ChangeDateFrom
   | ChangeQuestionPosition;

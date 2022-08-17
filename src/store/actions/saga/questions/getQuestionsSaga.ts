@@ -1,4 +1,11 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
+import { fetchQuestions } from '@services/api/questionsApi';
+import { getStateQuestion } from '@services/entitiesMapping/questions';
+import { IStackQuestion } from '@services/entities/IStackQuestion';
+import { IStateQuestion } from '@store/entities/IStateQuestion';
+import { IStateOwner } from '@store/entities/IStateOwner';
+import { getStateOwner } from '@services/entitiesMapping/owners';
+import { setOwners } from '@store/actions/actionCreators/ownersActionCreators';
 import {
   GET_QUESTIONS,
   GetQuestionsAction,
@@ -7,14 +14,27 @@ import {
   getQuestionsFailure,
   getQuestionsRequest,
   getQuestionsSuccess,
-} from '../../actionCreators/questionActionCreators';
-import { fetchQuestions } from '../../../../services/api/questionsApi';
+} from '../../actionCreators/questionsActionCreators';
+import {
+  changeDateFrom,
+  changeTitle,
+} from '../../actionCreators/questionFiltersAcitonCreators';
 
 function* onGetQuestions({ title, dateFrom }: GetQuestionsAction) {
   try {
     yield put(getQuestionsRequest());
     const { data } = yield call(fetchQuestions, title, dateFrom);
-    yield put(getQuestionsSuccess(data.items));
+    const stateQuestions: IStateQuestion[] = [];
+    const stateOwners: IStateOwner[] = [];
+    (data.items as IStackQuestion[]).forEach((q) => {
+      stateQuestions.push(getStateQuestion(q));
+      stateOwners.push(getStateOwner(q.owner));
+    });
+
+    yield put(getQuestionsSuccess(stateQuestions));
+    yield put(setOwners(stateOwners));
+    yield put(changeDateFrom(dateFrom));
+    yield put(changeTitle(title));
   } catch (e: any) {
     yield put(getQuestionsFailure(e.response.data.error));
   }

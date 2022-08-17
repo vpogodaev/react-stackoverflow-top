@@ -10,6 +10,8 @@ module.exports = {
       '@components': resolvePath('./src/components'),
       '@entities': resolvePath('./src/entities'),
       '@shared': resolvePath('./src/shared'),
+      '@services': resolvePath('./src/services'),
+      '@store': resolvePath('./src/store'),
     },
   },
   style: {

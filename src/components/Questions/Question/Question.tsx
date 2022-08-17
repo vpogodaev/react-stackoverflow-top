@@ -7,15 +7,15 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { IStackQuestion } from '@entities/IQuestion';
 import { useDrag } from 'react-dnd';
 import { draggableTypes } from '@shared/draggableTypes';
 import { Arrow } from '@components/Questions/Arrow/Arrow';
 import { Details } from '@components/Questions/Details/Details';
+import { IQuestion } from '@entities/IQuestion';
 import style from './Question.module.scss';
 
 export type TQuestionProps = {
-  question: IStackQuestion;
+  question: IQuestion;
   opened: boolean;
   onClick: MouseEventHandler<HTMLDivElement>;
   onDoubleClick: MouseEventHandler<HTMLDivElement>;
@@ -87,7 +87,7 @@ export const Question: FC<TQuestionProps> = ({
     () => [
       {
         infoLabel: 'Имя создателя вопроса:',
-        info: question.owner.display_name,
+        info: question.owner.displayName,
       },
       {
         infoLabel: 'Рейтинг создателя вопроса:',
@@ -95,16 +95,16 @@ export const Question: FC<TQuestionProps> = ({
       },
       {
         infoLabel: 'Количество просмотров:',
-        info: question.view_count?.toString(),
+        info: question.viewCount?.toString(),
       },
     ],
-    [question.question_id],
+    [question.questionId],
   );
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: draggableTypes.QUESTION,
     collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
+      isDragging: monitor.isDragging(),
     }),
     item: question,
   }));
@@ -112,7 +112,7 @@ export const Question: FC<TQuestionProps> = ({
   return (
     <div
       className={`${style.wrapper} ${style[selected]}${
-        question.is_answered ? ` ${style.correct}` : ''
+        question.isAnswered ? ` ${style.correct}` : ''
       }${isDragging ? ` ${style.dragging}` : ''}`}
       ref={drag}
     >
